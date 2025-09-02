@@ -1,0 +1,509 @@
+:root {
+      --primary-color: #4cafff;
+      --secondary-color: #3a9de6;
+      --success-color: #4CAF50;
+      --danger-color: #f44336;
+      --text-color: #333;
+      --background-gradient: linear-gradient(to right, #89f7fe, #66a6ff);
+      --card-bg: white;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--background-gradient);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: background 1s ease;
+      overflow-x: hidden;
+    }
+
+    /* Weather Background Effects */
+    .weather-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Rain animation */
+    .rain {
+      display: none;
+    }
+
+    .rain-drop {
+      position: absolute;
+      width: 2px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.5);
+      animation: rain-fall linear infinite;
+    }
+
+    @keyframes rain-fall {
+      0% { transform: translateY(-100px); }
+      100% { transform: translateY(calc(100vh + 100px)); }
+    }
+
+    /* Snow animation */
+    .snow {
+      display: none;
+    }
+
+    .snowflake {
+      position: absolute;
+      color: white;
+      font-size: 16px;
+      animation: snow-fall linear infinite;
+    }
+
+    @keyframes snow-fall {
+      0% { transform: translateY(-100px) rotate(0deg); }
+      100% { transform: translateY(calc(100vh + 100px)) rotate(360deg); }
+    }
+
+    /* Sun rays animation */
+    .sunny {
+      display: none;
+    }
+
+    .sun-ray {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,255,255,0) 70%);
+      animation: pulse-sun 4s infinite alternate;
+    }
+
+    @keyframes pulse-sun {
+      0% { opacity: 0.3; }
+      100% { opacity: 0.7; }
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 500px;
+      z-index: 10;
+    }
+
+    .container {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      text-align: center;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: var(--text-color);
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    input {
+      padding: 12px;
+      width: 70%;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 12px 16px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .weather-info {
+      margin-top: 25px;
+      font-size: 17px;
+      color: var(--text-color);
+    }
+
+    .weather-info img {
+      width: 80px;
+      margin: 10px 0;
+    }
+
+    .flag {
+      width: 25px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    #mapContainer {
+      display: none; /* Show with JS when needed */
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    #map {
+      height: 70vh;
+      width: 90vw;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      background: #fff;
+    }
+
+    .map-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .map-btn {
+      padding: 8px 16px;
+      border-radius: 5px;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .map-btn.close-btn {
+      background: #d32f2f;
+    }
+
+    .temp-toggle {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .temp-toggle button {
+      padding: 6px 12px;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .temp-toggle button.active {
+      background-color: #1e88e5;
+    }
+
+    .history-container {
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+    }
+
+    .history-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .history-list {
+      max-height: 150px;
+      overflow-y: auto;
+      text-align: left;
+      padding: 0 10px;
+    }
+
+    .history-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .history-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .clear-history {
+      margin-top: 10px;
+      background-color: var(--danger-color);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .historical-section {
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+    }
+
+    .historical-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .date-range {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .date-range input {
+      width: 45%;
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 200px;
+      margin-top: 15px;
+    }
+
+    .historical-btn {
+      background-color: var(--success-color);
+      margin-top: 10px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 30px;
+      padding: 5px;
+    }
+
+    .nav-tab {
+      padding: 10px 20px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 20px;
+      color: var(--text-color);
+    }
+
+    .nav-tab.active {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: bold;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .weather-animation {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
+
+    .forecast-container {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .forecast-day {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .forecast-day:last-child {
+      border-bottom: none;
+    }
+
+    .forecast-date {
+      font-weight: bold;
+      width: 30%;
+    }
+
+    .forecast-temp {
+      width: 30%;
+      text-align: right;
+    }
+
+    .forecast-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* AI Analysis Styles */
+    .ai-analysis-container {
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+    }
+
+    .ai-analysis-box {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 10px;
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+      border-left: 4px solid #4cafff;
+    }
+
+    .ai-loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .ai-loading-dots {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .ai-loading-dots div {
+      position: absolute;
+      top: 33px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #4cafff;
+      animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+
+    .ai-loading-dots div:nth-child(1) {
+      left: 8px;
+      animation: ai-loading-dots1 0.6s infinite;
+    }
+
+    .ai-loading-dots div:nth-child(2) {
+      left: 8px;
+      animation: ai-loading-dots2 0.6s infinite;
+    }
+
+    .ai-loading-dots div:nth-child(3) {
+      left: 32px;
+      animation: ai-loading-dots2 0.6s infinite;
+    }
+
+    .ai-loading-dots div:nth-child(4) {
+      left: 56px;
+      animation: ai-loading-dots3 0.6s infinite;
+    }
+
+    @keyframes ai-loading-dots1 {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes ai-loading-dots2 {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(24px, 0); }
+    }
+
+    @keyframes ai-loading-dots3 {
+      0% { transform: scale(1); }
+      100% { transform: scale(0); }
+    }
+
+    .ai-error {
+      color: var(--danger-color);
+      text-align: center;
+      padding: 10px;
+    }
+
+    .ai-analysis-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #1e88e5;
+    }
+
+    .ai-analysis-content {
+      line-height: 1.6;
+    }
+
+    .ai-analysis-content p {
+      margin-bottom: 10px;
+    }
+
+    .ai-analysis-content ul {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .ai-analysis-content li {
+      margin-bottom: 5px;
+    }
+
+    .generate-analysis-btn {
+      background-color: #6c5ce7;
+      margin-top: 10px;
+    }
+
+    .generate-analysis-btn:hover {
+      background-color: #5c4bc9;
+    }
+
+    @media (max-width: 500px) {
+      .search-container {
+        flex-direction: column;
+      }
+      
+      input, button {
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      #map {
+        height: 60vh;
+        width: 95%;
+      }
+
+      .date-range {
+        flex-direction: column;
+      }
+
+      .date-range input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .nav-tabs {
+        flex-wrap: wrap;
+      }
+
+      .nav-tab {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+    }

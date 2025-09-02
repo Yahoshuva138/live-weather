@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <!-- Weather Background Effects -->
+  <div class="weather-background">
+    <div class="rain" id="rainEffect"></div>
+    <div class="snow" id="snowEffect"></div>
+    <div class="sunny" id="sunEffect"></div>
+  </div>
+
+  <div class="app-container">
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showPage('current')">Current Weather</button>
+      <button class="nav-tab" onclick="showPage('history')">History & Data</button>
+      <button class="nav-tab" onclick="showPage('ai')">AI Analysis</button>
+    </div>
+
+    <div class="container">
+      <!-- Current Weather Page -->
+      <div id="current-page" class="page active">
+        <h1>🌤 Weather App</h1>
+        <div class="search-container">
+          <input type="text" id="cityInput" placeholder="Enter city name" />
+          <button onclick="getWeather()">Search</button>
+        </div>
+        <button onclick="openMap()" style="width: 100%; margin-bottom: 15px;">📍 Search by Location</button>
+
+        <div class="weather-animation" id="weatherAnimation"></div>
+        <div class="weather-info" id="weatherInfo"></div>
+      </div>
+
+      <!-- History & Data Page -->
+      <div id="history-page" class="page">
+        <h1>📊 Weather History</h1>
+        <div class="history-container">
+          <div class="history-title">Recent Searches:</div>
+          <div class="history-list" id="historyList"></div>
+          <button class="clear-history" onclick="clearHistory()">Clear History</button>
+        </div>
+        <div class="historical-section">
+          <div class="historical-title">5-Day Forecast</div>
+          <div class="forecast-container" id="forecastContainer"></div>
+        </div>
+      </div>
+
+      <!-- AI Analysis Page -->
+      <div id="ai-page" class="page">
+        <h1>🤖 AI Weather Analysis</h1>
+        <div class="ai-analysis-container">
+          <div class="historical-title">AI-Powered Weather Insights</div>
+          <p>Get detailed analysis and recommendations based on current weather conditions.</p>
+          <button class="generate-analysis-btn" onclick="generateAIAnalysis()">Generate AI Analysis</button>
+          <div class="ai-analysis-box" id="aiAnalysisResult">
+            <div class="ai-loading" id="aiLoading" style="display: none;">
+              <div class="ai-loading-dots">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div class="ai-analysis-content" id="aiAnalysisContent"></div>
+            <div class="ai-error" id="aiError"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="mapContainer">
+    <div id="map"></div>
+    <div class="map-controls">
+      <button class="map-btn location-btn" onclick="useCurrentLocation()">Use Current Location</button>
+      <button class="map-btn" onclick="useSelectedLocation()">Use Selected Location</button>
+      <button class="map-btn close-btn" onclick="closeMap()">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
